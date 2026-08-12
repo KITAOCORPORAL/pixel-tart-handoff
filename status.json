@@ -1,12 +1,13 @@
-{
+﻿{
   "protocol": "pixel-tart-handoff/v1",
   "state": "waiting_for_gpt_review",
   "report_id": "RC2-PENDING",
   "project": "Pixel Tart",
   "branch": "feature/pixel-tart-product-redesign",
-  "head": "681d1aef4a9dd998e26b4d6262085fd9041d3b00",
+  "head": "fb3716c7bfa67a76f465526d39a2cff6ff6f4070",
   "tests_passed": 1943,
   "tests_failed": 0,
-  "installer": "RAWSelectionAssistant/artifacts/releases/2.3.0/installer/像素蛋挞_Setup_2.3.0_ProductRedesign_RC2_x64.exe",
+  "installer": "RAWSelectionAssistant/artifacts/releases/2.3.0/installer/鍍忕礌铔嬫尀_Setup_2.3.0_ProductRedesign_RC2_x64.exe",
   "updated_at": "2026-08-12T00:00:00+08:00"
 }
+
