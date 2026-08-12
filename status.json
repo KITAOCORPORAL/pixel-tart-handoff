@@ -1,12 +1,12 @@
 {
   "protocol": "pixel-tart-handoff/v1",
   "state": "waiting_for_gpt_review",
-  "report_id": "RC2-174e56b4",
+  "report_id": "RC3-CoreReliability-e606139",
   "project": "Pixel Tart",
   "branch": "feature/pixel-tart-product-redesign",
-  "head": "174e56b4170d4c1fdf97ff1a6f4cecdcf3fab043",
-  "tests_passed": 1943,
+  "head": "e606139a0a8ab7a052e3aab2e6cf656896631647",
+  "tests_passed": 1952,
   "tests_failed": 0,
-  "installer": "RAWSelectionAssistant/artifacts/releases/2.3.0/installer/像素蛋挞_Setup_2.3.0_ProductRedesign_RC2_x64.exe",
-  "updated_at": "2026-08-12T00:00:00+08:00"
+  "installer": "artifacts/releases/2.3.0/installer/像素蛋挞_2.3.0_CoreReliability_DevValidation_x64.exe",
+  "updated_at": "2026-08-12T16:00:00+08:00"
 }

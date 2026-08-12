@@ -1,13 +1,13 @@
 # Codex → GPT Handoff
 
 Protocol: pixel-tart-handoff/v1
-ReportId: RC2-174e56b4
-CreatedAt: 2026-08-12T00:00:00+08:00
+ReportId: RC3-CoreReliability-e606139
+CreatedAt: 2026-08-12T16:00:00+08:00
 Project: Pixel Tart
 
 ## Git
 Branch: feature/pixel-tart-product-redesign
-HEAD: 174e56b4170d4c1fdf97ff1a6f4cecdcf3fab043
+HEAD: e606139a0a8ab7a052e3aab2e6cf656896631647
 WorkingTreeClean: true
 
 ## Version
@@ -16,38 +16,38 @@ FileVersion: 2.3.0.0
 SchemaVersion: 5
 
 ## 本轮完成
-- RC2 产品开发冻结，不进入 RC3。
-- 完成可见功能审计、Task Center 终态一致性和日历四态收口。
-- 日历主状态为：空闲灰色、待拍摄红色、后期黄色、已交付蓝色。
-- RC2 安装包已生成，Provider 为 None。
+完成 CoreReliability DevValidation：修复同目录转换前置校验、统一结构化失败信息、保持源文件安全、让 Modal 与 Task Center 使用同一 TaskId 和终态，并补充四条真实文件 Golden Path 验证记录。没有创建 RC3，也没有修改 SchemaVersion。
 
 ## 测试
-Debug: 1943/1943 通过，0 失败，0 跳过，0 错误
-Release: 1943/1943 通过，0 失败，0 跳过，0 错误
-DPI: 101/101 通过（Debug 和 Release）
+Debug: 1952/1952 通过，0失败，0跳过，0错误
+Release: 1952/1952 通过，0失败，0跳过，0错误
+DPI: 101/101 通过（Debug 与 Release）
 
 ## Installed UI
 CodeVerified: true
 AutomatedVerified: true
-InstalledUiVerified: partial
+InstalledUiVerified: false
 UserVerified: false
 
 ## 安装包
-Path: RAWSelectionAssistant/artifacts/releases/2.3.0/installer/像素蛋挞_Setup_2.3.0_ProductRedesign_RC2_x64.exe
-SHA256: E33C0A5B13312FA9CEB874A8BB52E907E6E4D8F444FE1D0B66ED101439BF8FFF
-SizeBytes: 50716988
-RC1 retained unchanged: D8A997A463D64BB1D44D3ACFFBDD4A7213DC4A1EDD91FF404CBA4711C2804660
+Path: artifacts/releases/2.3.0/installer/像素蛋挞_2.3.0_CoreReliability_DevValidation_x64.exe
+SHA256: 9A999CBC21EAB6C1377C2EB9F93212C054D60C6B8F92B73222AF69C55662FD1E
+SizeBytes: 50705971
+InstallRoot: 独立验证目录（未使用真实 LocalAppData）
 
 ## UI证据
-- 脱敏 UI 审查图片位于 `ui-review/rc2/`。
-- 图片仅用于界面审查，不代表用户已完成实机验收。
-- 完整日历采用 60/40 布局，迷你日历和完整日历共用日期状态解析。
+本轮前台窗口已启动并写入独立验证运行目录。系统检测到用户输入后，Codex 停止继续注入鼠标键盘；因此没有把前台点击结果冒充 InstalledUiVerified。脱敏证据索引位于 `ui-review/core-reliability/`，不含照片或 RAW。
+
+四条 Golden Path 的真实文件验证均已完成：
+- Local Split：RealFileVerified=true；InstalledUiVerified=false；磁盘输出6；Task Center终态Completed；结果一致。
+- RAW → JPG：RealFileVerified=true；InstalledUiVerified=false；磁盘输出1；Task Center终态Completed；结果一致。
+- Batch Compress：RealFileVerified=true；InstalledUiVerified=false；磁盘输出3；Task Center终态Completed；结果一致。
+- Collage：RealFileVerified=true；InstalledUiVerified=false；磁盘输出1；Task Center终态Completed；结果一致。
+
+最近五份重构报告均存在：ProductRedesign RC2、ProductRedesign RC3 核心可用性抢救、产品重构总验收、产品体验总重构、最终产物一致性审计。
 
 ## 未验证项目
-- 用户前台安装验收尚未完成。
-- 日历右键菜单、关闭档期及重启后的关闭状态需要用户确认。
-- 在线选片的真实项目创建、四个标签页、代理和结果同步仍需用户前台确认。
-- 未使用真实客户资料或生产 LocalAppData。
+需要用户在当前前台桌面亲自完成：关闭首次教程覆盖层后，逐项点击四条 Golden Path，并确认 Modal、Task Center、实际输出数量一致；还需验证日历右键/关闭档期持久化和在线选片四标签。UserVerified 必须继续为 false。
 
 ## 请求GPT审查
-请审查 RC2 的测试结果、安装包哈希、脱敏 UI 证据和未验证项目，并保持 `UserVerified: false`，直到用户完成前台验收。
+请审查本轮提交 e606139、Debug/Release 1952/1952、安装包 SHA-256、四条真实文件验证记录和 `ui-review/core-reliability/` 脱敏证据。请保持 DevValidation，待用户完成前台验收后再决定是否允许 RC3。

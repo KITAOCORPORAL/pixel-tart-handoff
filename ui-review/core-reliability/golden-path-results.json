@@ -1,0 +1,12 @@
+{
+  "protocol": "pixel-tart-handoff/pixel-tart-core-reliability/v1",
+  "build_type": "CoreReliability DevValidation",
+  "installed_ui_verified": false,
+  "user_verified": false,
+  "paths": [
+    { "name": "LocalSplit", "real_file_verified": true, "installed_ui_verified": false, "disk_output_count": 6, "task_center_state": "Completed", "consistent": true },
+    { "name": "RawToJpeg", "real_file_verified": true, "installed_ui_verified": false, "disk_output_count": 1, "task_center_state": "Completed", "consistent": true },
+    { "name": "BatchCompress", "real_file_verified": true, "installed_ui_verified": false, "disk_output_count": 3, "task_center_state": "Completed", "consistent": true },
+    { "name": "Collage", "real_file_verified": true, "installed_ui_verified": false, "disk_output_count": 1, "task_center_state": "Completed", "consistent": true }
+  ]
+}
