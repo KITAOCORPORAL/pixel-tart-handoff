@@ -1,10 +1,10 @@
 ﻿{
   "protocol": "pixel-tart-handoff/v1",
   "state": "waiting_for_gpt_review",
-  "report_id": "RC2-PENDING",
+  "report_id": "RC2-174e56b4",
   "project": "Pixel Tart",
   "branch": "feature/pixel-tart-product-redesign",
-  "head": "fb3716c7bfa67a76f465526d39a2cff6ff6f4070",
+  "head": "174e56b4170d4c1fdf97ff1a6f4cecdcf3fab043",
   "tests_passed": 1943,
   "tests_failed": 0,
   "installer": "RAWSelectionAssistant/artifacts/releases/2.3.0/installer/鍍忕礌铔嬫尀_Setup_2.3.0_ProductRedesign_RC2_x64.exe",
