@@ -1,4 +1,4 @@
-﻿# Codex 鈫?GPT Handoff
+# Codex → GPT Handoff
 
 Protocol: pixel-tart-handoff/v1
 ReportId: RC2-174e56b4
@@ -7,7 +7,7 @@ Project: Pixel Tart
 
 ## Git
 Branch: feature/pixel-tart-product-redesign
-HEAD: 174e56b4170d4c1fdf97ff1a6f4cecdcf3fab043 (RC2 product commits)
+HEAD: 174e56b4170d4c1fdf97ff1a6f4cecdcf3fab043
 WorkingTreeClean: true
 
 ## Version
@@ -15,40 +15,39 @@ ProductVersion: 2.3.0
 FileVersion: 2.3.0.0
 SchemaVersion: 5
 
-## 鏈疆瀹屾垚
-- Visible Feature Audit and Zero Dead Control audit added.
-- TaskCenter uses one TaskEngine terminal record and exposes TaskId, 鏌ョ湅鍘熷洜, and copy diagnostics.
-- RAW and batch coordinators wait for persisted terminal state.
-- Calendar uses four main states: Free gray, Scheduled red, PostProduction yellow, Delivered blue; green Shot exits main calendar badges.
-- MarkShootCompleted persists ShotCompletedAtUtc and transitions to PostProduction; undo, delivery, reopen, and closed-day contracts are covered.
-- Schema5 migration and architecture documentation are included.
+## 本轮完成
+- RC2 产品开发冻结，不进入 RC3。
+- 完成可见功能审计、Task Center 终态一致性和日历四态收口。
+- 日历主状态为：空闲灰色、待拍摄红色、后期黄色、已交付蓝色。
+- RC2 安装包已生成，Provider 为 None。
 
-## 娴嬭瘯
-Debug: 1943/1943 passed; 0 failed; 0 skipped; 0 errors
-Release: 1943/1943 passed; 0 failed; 0 skipped; 0 errors
-DPI: 101/101 in Debug and Release
+## 测试
+Debug: 1943/1943 通过，0 失败，0 跳过，0 错误
+Release: 1943/1943 通过，0 失败，0 跳过，0 错误
+DPI: 101/101 通过（Debug 和 Release）
 
 ## Installed UI
 CodeVerified: true
 AutomatedVerified: true
-InstalledUiVerified: partial; foreground user verification remains required
+InstalledUiVerified: partial
 UserVerified: false
 
-## 瀹夎鍖?Path: RAWSelectionAssistant/artifacts/releases/2.3.0/installer/鍍忕礌铔嬫尀_Setup_2.3.0_ProductRedesign_RC2_x64.exe
+## 安装包
+Path: RAWSelectionAssistant/artifacts/releases/2.3.0/installer/像素蛋挞_Setup_2.3.0_ProductRedesign_RC2_x64.exe
 SHA256: E33C0A5B13312FA9CEB874A8BB52E907E6E4D8F444FE1D0B66ED101439BF8FFF
 SizeBytes: 50716988
 RC1 retained unchanged: D8A997A463D64BB1D44D3ACFFBDD4A7213DC4A1EDD91FF404CBA4711C2804660
 
-## UI璇佹嵁
-- Sanitized source evidence: RAWSelectionAssistant/artifacts/ui-review/product-redesign/
-- Handoff subset: ui-review/rc2/ (generated/test-material screenshots only)
-- Full calendar is 60/40; mini/full share CalendarDayVisualStateResolver.
-- Evidence does not imply UserVerified.
+## UI证据
+- 脱敏 UI 审查图片位于 `ui-review/rc2/`。
+- 图片仅用于界面审查，不代表用户已完成实机验收。
+- 完整日历采用 60/40 布局，迷你日历和完整日历共用日期状态解析。
 
-## 鏈獙璇侀」鐩?- Foreground user verification of RC2 install at supported window sizes.
-- Right-click calendar menu and closed-day persistence after restart.
-- Online project creation/four tabs/result sync through native file dialogs on hidden desktop.
-- No real customer data or production LocalAppData was accessed.
+## 未验证项目
+- 用户前台安装验收尚未完成。
+- 日历右键菜单、关闭档期及重启后的关闭状态需要用户确认。
+- 在线选片的真实项目创建、四个标签页、代理和结果同步仍需用户前台确认。
+- 未使用真实客户资料或生产 LocalAppData。
 
-## 璇锋眰GPT瀹℃煡
-璇峰鏌?RC2 鍥涙€佹棩鍘嗐€丼chema5 migration銆乀askEngine/RAW/Batch 鐘舵€佷竴鑷存€с€乂isible Feature Audit銆佸畨瑁呭寘鍝堝笇鍜?UI 璇佹嵁鑴辨晱杈圭晫锛屽苟鍖哄垎 CodeVerified銆丄utomatedVerified銆両nstalledUiVerified 涓?UserVerified銆?
+## 请求GPT审查
+请审查 RC2 的测试结果、安装包哈希、脱敏 UI 证据和未验证项目，并保持 `UserVerified: false`，直到用户完成前台验收。
