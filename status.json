@@ -1,12 +1,19 @@
 {
   "protocol": "pixel-tart-handoff/v1",
   "state": "waiting_for_gpt_review",
-  "report_id": "RC3-CoreReliability-e606139",
+  "report_id": "core-reliability-interaction-hotfix-20260812",
   "project": "Pixel Tart",
   "branch": "feature/pixel-tart-product-redesign",
-  "head": "e606139a0a8ab7a052e3aab2e6cf656896631647",
-  "tests_passed": 1952,
+  "head": "51044d65dfedee52e595f648cc6167e3b934c5d8",
+  "tests_passed": 1974,
   "tests_failed": 0,
-  "installer": "artifacts/releases/2.3.0/installer/像素蛋挞_2.3.0_CoreReliability_DevValidation_x64.exe",
-  "updated_at": "2026-08-12T16:00:00+08:00"
+  "installer": "artifacts/releases/2.3.0/installer/PixelTart_2.3.0_CoreReliability_InteractionHotfix_DevValidation_x64.exe",
+  "updated_at": "2026-08-12T18:05:00+08:00",
+  "build_type": "CoreReliability_InteractionHotfix_DevValidation",
+  "modal_interaction_verified": false,
+  "tutorial_exit_verified": false,
+  "tutorial_step18_verified": false,
+  "escape_close_verified": false,
+  "installed_ui_verified": false,
+  "user_verified": false
 }

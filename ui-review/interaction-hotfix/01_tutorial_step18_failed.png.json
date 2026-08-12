@@ -1,0 +1,11 @@
+{
+  "evidence_id": "interaction-hotfix-01",
+  "build_type": "CoreReliability_InteractionHotfix_DevValidation",
+  "source": "sanitized reference UI; not installed runtime capture",
+  "code_verified": true,
+  "automated_verified": true,
+  "installed_ui_verified": false,
+  "user_verified": false,
+  "contains_customer_data": false,
+  "contains_raw": false
+}
