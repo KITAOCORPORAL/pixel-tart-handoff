@@ -11,6 +11,13 @@ artifacts/
 *.jpg
 *.jpeg
 *.png
+
+# Only sanitized UI review evidence may contain image files.
+!ui-review/
+!ui-review/**/*.png
+!ui-review/**/*.jpg
+!ui-review/**/*.jpeg
+
 *.raw
 *.arw
 *.cr2
