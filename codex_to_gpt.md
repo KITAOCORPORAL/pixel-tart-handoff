@@ -1,8 +1,8 @@
 # Codex → GPT Handoff
 
 Protocol: pixel-tart-handoff/v1
-ReportId: physical-pointer-diagnostic-launcher-devvalidation2-20260813
-CreatedAt: 2026-08-13T17:27:56+08:00
+ReportId: physical-pointer-tutorial-exit-result-20260813
+CreatedAt: 2026-08-13T17:51:46+08:00
 Project: Pixel Tart
 
 ## Git
@@ -16,9 +16,9 @@ FileVersion: 2.3.0.0
 SchemaVersion: 5
 
 ## 本轮完成
-完成 Physical Pointer Diagnostic DevValidation2 的非开发用户启动入口。新安装包使用独立 AppId、独立安装目录和独立 Acceptance 数据根，不覆盖或关闭正式版，也不读写正式版 LocalAppData。
+只读分析 DevValidation2 独立 Acceptance 根中的最新 Physical Pointer Session。没有启动应用、没有重放点击、没有使用 UI Automation InvokePattern 或 Command.Execute，也没有修改或重新构建产品。
 
-安装后已创建公共桌面快捷方式和“像素蛋挞”开始菜单入口，二者均直接指向本诊断版安装目录内的 `KitaoPhotoSelector.Acceptance.exe`。安装完成页默认勾选启动当前诊断版。Windows 已安装应用名称为“像素蛋挞 - Physical Pointer Diagnostic DevValidation”。诊断构建窗口标题为“像素蛋挞 [Physical Pointer Diagnostic]”。
+最新会话为 `PT-INPUT-20260813-003`。其中用户对“退出教程”的最新物理尝试为 `pointer-009`；同一会话此前另有七次相同命中，结果一致。
 
 ## 测试
 Debug: 2009/2009 (Core 1136 + WPF 772 + DPI 101), 0 failed, 0 skipped
@@ -31,13 +31,17 @@ DPI: 101/101
 CodeVerified: true
 AutomatedVerified: true
 InstalledUiAutomationVerified: true
-InstalledUiVerified: true
+InstalledUiVerified: false
 PhysicalPointerVerified: false
 UserVerified: false
 
-实际安装与入口验收通过：桌面快捷方式存在、开始菜单入口存在、完成页成功启动诊断版、Windows Shell 从公共桌面 `.lnk` 再次启动成功、窗口标题正确、进程来自独立 DevValidation2 安装目录。专用数据根成功创建，正式版两个 LocalAppData 根在验收前后文件数量、总字节数和最新写入时间均未变化。
+Win32 Layer：WM_LBUTTONDOWN=true、WM_LBUTTONUP=true。WPF Layer：PreviewMouseLeftButtonDown=true、PreviewMouseLeftButtonUp=true；OriginalSource 是按钮模板内的 TextBlock，Source 是 `Button[AutomationId=TutorialExitButton]`，Handled=false。
 
-InstalledUiVerified 仅表示本轮“安装与启动入口”通过，不表示 Physical Pointer 功能已由用户验证。PhysicalPointerVerified 与 UserVerified 继续保持 false。
+HitTest Layer：InputHitTest 与 VisualTreeHelper.HitTest 均命中 `TextBlock`；父链明确经过 `Button[AutomationId=TutorialExitButton]`、TutorialCard、TutorialOverlay、RootGrid。链上元素均可命中且已启用。Session 没有独立的 `blocking_element` 字段，`blocking_ancestor=null` 仅表示命中父链未记录到禁用或不可命中的祖先；本次路由 Source 确实到达 `TutorialExitButton`，但不能据此扩大声明为诊断器排除了所有可能遮挡。
+
+Action Layer：`TutorialExitButton Click=false`、`ForceExitTutorialEntered=false`、`tutorial_overlay_detached=false`。会话结束时 TutorialActive 仍为 true，TutorialOverlay 仍为当前 overlay；Session 不直接记录 Backdrop、Sidebar 或 Workbench 恢复状态，因此这些字段保持 `not_recorded`。断点位于 WPF 已完成 Preview Down/Up、但 Button Click 未生成之间。
+
+诊断初始化正常，不是 DIAGNOSTIC_CAPTURE_FAILED：Session 成功写入；Win32 Hook 由真实 WM Down/Up 证明；WPF AddHandler 由真实 Preview Down/Up 证明；日志 Writer 成功创建并原子更新 Session。
 
 ## 安装包
 Path: artifacts/releases/2.3.0/installer/PixelTart_2.3.0_PhysicalPointerDiagnostic_DevValidation2_x64.exe
@@ -46,10 +50,10 @@ BuildType: PhysicalPointerDiagnostic_DevValidation2
 Size: 50749979 bytes
 
 ## UI证据
-本轮没有向公开 Handoff 上传桌面截图、真实路径截图、客户资料、照片、RAW、数据库或原始诊断日志。入口验收只提交脱敏布尔结果与安装包相对路径。
+本轮仅上传上述脱敏布尔结论和安全控件标识。未上传原始 Session、坐标、本机路径、截图、客户资料、照片、RAW、数据库或日志。
 
 ## 未验证项目
-教程 X、教程“退出教程”、拼图唯一 X、RAW 唯一 X、批量压缩唯一 X 的真实物理鼠标功能仍需用户前台验证。不得从本轮安装器启动成功推断这些功能已通过。
+教程“退出教程”真实物理鼠标结果为失败。教程 X、拼图、RAW、批量压缩的物理结果不从本次按钮点击推断。
 
 ## 请求GPT审查
-请审查产品提交、DevValidation2 独立 AppId/目录/Acceptance 根、桌面和开始菜单快捷方式目标、完成页启动、诊断标题、安装包哈希与正式数据根未变化证据。请保持 state=waiting_for_gpt_review、PhysicalPointerVerified=false、UserVerified=false。
+请审查最新物理 Session 的四层断点：Win32 与 WPF Preview 均收到、HitTest 正确到达 TutorialExitButton、无 blocking element，但 Button Click 和 ForceExitTutorial 均未进入。请保持 state=waiting_for_gpt_review、physical_pointer_verified=false、tutorial_exit_physical_verified=false、UserVerified=false。
