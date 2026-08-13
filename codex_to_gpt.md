@@ -1,13 +1,13 @@
 # Codex → GPT Handoff
 
 Protocol: pixel-tart-handoff/v1
-ReportId: physical-pointer-tutorial-exit-result-20260813
-CreatedAt: 2026-08-13T17:51:46+08:00
+ReportId: click-routing-fix-devvalidation-20260813
+CreatedAt: 2026-08-13T18:49:29+08:00
 Project: Pixel Tart
 
 ## Git
 Branch: feature/pixel-tart-product-redesign
-HEAD: 9a093fa733da2d675ecb1b7ffee7b0111116f97a
+HEAD: 4dac5f8e4460b7a67309646b6133bd186c121fea
 WorkingTreeClean: true
 
 ## Version
@@ -16,44 +16,50 @@ FileVersion: 2.3.0.0
 SchemaVersion: 5
 
 ## 本轮完成
-只读分析 DevValidation2 独立 Acceptance 根中的最新 Physical Pointer Session。没有启动应用、没有重放点击、没有使用 UI Automation InvokePattern 或 Command.Execute，也没有修改或重新构建产品。
+基于用户真实物理会话 `PT-INPUT-20260813-003 / pointer-009`，确认 Win32 与 WPF Preview Down/Up 均到达 `TutorialExitButton`，但旧版未生成 `Button.Click`。
 
-最新会话为 `PT-INPUT-20260813-003`。其中用户对“退出教程”的最新物理尝试为 `pointer-009`；同一会话此前另有七次相同命中，结果一致。
+高置信根因是教程布局在按钮按下后重新聚焦教程目标：按钮获得焦点会触发布局刷新，旧逻辑随后将焦点夺回当前教程目标，导致 Release 模式按钮在 MouseUp 前丢失按压/捕获状态，因此不生成 Click。旧会话未直接记录 Mouse Capture、IsPressed 或按钮实例 ID，所以该中间状态是源码机制与八次重复真实会话共同支持的高置信结论，不冒充直接诊断记录。
+
+本轮新增仅限 Escape 类控件的 PointerDown 路径：教程文字退出、教程唯一 X、Shell/Modal/Drawer 关闭 X 在真实 PointerDown 到达后立即进入现有 Shell Escape；普通保存、删除、转换、复制和导出仍使用标准 Click。键盘与 UI Automation 的标准 Button.Click 路径保留。同一输入事件只分发一次。
+
+物理诊断新增 Down/Up 目标、Mouse Capture、IsPressed、按钮实例和 CanExecute 快照，并修复 PointerDown 在 MouseUp/Click 前成功关闭时的会话关联；UIA、Command 和普通按钮不能冒充物理 PointerDown。
 
 ## 测试
-Debug: 2009/2009 (Core 1136 + WPF 772 + DPI 101), 0 failed, 0 skipped
-Release: 2009/2009 (Core 1136 + WPF 772 + DPI 101), 0 failed, 0 skipped
+Debug: 2017/2017 (Core 1136 + WPF 780 + DPI 101), 0 failed, 0 skipped
+Release: 2017/2017 (Core 1136 + WPF 780 + DPI 101), 0 failed, 0 skipped
 DPI: 101/101
 
-本轮入口改动额外通过 Acceptance + InputRoutingDiagnostics Release build（0 warning/0 error）与 PhysicalPointerDiagnosticContractTests 4/4。
+专项：输入路由与物理诊断 18/18；Acceptance + InputRoutingDiagnostics 构建 0 warning / 0 error。
 
 ## Installed UI
 CodeVerified: true
 AutomatedVerified: true
-InstalledUiAutomationVerified: true
 InstalledUiVerified: false
 PhysicalPointerVerified: false
+TutorialExitPhysicalVerified: false
+TutorialXPhysicalVerified: false
+CollageXPhysicalVerified: false
 UserVerified: false
 
-Win32 Layer：WM_LBUTTONDOWN=true、WM_LBUTTONUP=true。WPF Layer：PreviewMouseLeftButtonDown=true、PreviewMouseLeftButtonUp=true；OriginalSource 是按钮模板内的 TextBlock，Source 是 `Button[AutomationId=TutorialExitButton]`，Handled=false。
-
-HitTest Layer：InputHitTest 与 VisualTreeHelper.HitTest 均命中 `TextBlock`；父链明确经过 `Button[AutomationId=TutorialExitButton]`、TutorialCard、TutorialOverlay、RootGrid。链上元素均可命中且已启用。Session 没有独立的 `blocking_element` 字段，`blocking_ancestor=null` 仅表示命中父链未记录到禁用或不可命中的祖先；本次路由 Source 确实到达 `TutorialExitButton`，但不能据此扩大声明为诊断器排除了所有可能遮挡。
-
-Action Layer：`TutorialExitButton Click=false`、`ForceExitTutorialEntered=false`、`tutorial_overlay_detached=false`。会话结束时 TutorialActive 仍为 true，TutorialOverlay 仍为当前 overlay；Session 不直接记录 Backdrop、Sidebar 或 Workbench 恢复状态，因此这些字段保持 `not_recorded`。断点位于 WPF 已完成 Preview Down/Up、但 Button Click 未生成之间。
-
-诊断初始化正常，不是 DIAGNOSTIC_CAPTURE_FAILED：Session 成功写入；Win32 Hook 由真实 WM Down/Up 证明；WPF AddHandler 由真实 Preview Down/Up 证明；日志 Writer 成功创建并原子更新 Session。
+新包尚未由用户安装并完成真实物理鼠标复验，任何自动测试或代码审计均未将上述字段改为 true。
 
 ## 安装包
-Path: artifacts/releases/2.3.0/installer/PixelTart_2.3.0_PhysicalPointerDiagnostic_DevValidation2_x64.exe
-SHA256: 1A8A481E06A05E5C5C3A9279860862944EC4AC7ABDF73C36EB0BC1220ED562ED
-BuildType: PhysicalPointerDiagnostic_DevValidation2
-Size: 50749979 bytes
+Path: artifacts/releases/2.3.0/installer/PixelTart_2.3.0_ClickRoutingFix_DevValidation_x64.exe
+SHA256: F9870E01E4B7CC763B68FB2DC1992B580D97222C7BA1488F9BE66CBCE0A042DC
+BuildType: ClickRoutingFix_DevValidation
+Size: 50729141 bytes
+
+安装定义使用独立 AppId、独立安装目录、Acceptance 主程序和独立数据根；开始菜单、可选桌面快捷方式与完成页启动均指向本包 Acceptance EXE。未覆盖旧包，未触碰正式 LocalAppData。
 
 ## UI证据
-本轮仅上传上述脱敏布尔结论和安全控件标识。未上传原始 Session、坐标、本机路径、截图、客户资料、照片、RAW、数据库或日志。
+本轮未上传截图、原始物理 Session、坐标、日志、照片、RAW、数据库或用户数据。公开仓库仅保留脱敏结论。
 
 ## 未验证项目
-教程“退出教程”真实物理鼠标结果为失败。教程 X、拼图、RAW、批量压缩的物理结果不从本次按钮点击推断。
+1. 安装新包后，用真实鼠标点击教程“退出教程”，必须立即退出。
+2. 再次进入教程，用真实鼠标点击唯一 X，必须立即退出。
+3. 打开拼图，确认右上角仅一个 X，并用真实鼠标点击后立即返回。
+
+旧会话字段：Mouse Capture Down、Mouse Capture Up、Down/Up 同一按钮实例均未被旧版诊断记录；不能从源码推断改写为已实测。
 
 ## 请求GPT审查
-请审查最新物理 Session 的四层断点：Win32 与 WPF Preview 均收到、HitTest 正确到达 TutorialExitButton、无 blocking element，但 Button Click 和 ForceExitTutorial 均未进入。请保持 state=waiting_for_gpt_review、physical_pointer_verified=false、tutorial_exit_physical_verified=false、UserVerified=false。
+请审查 Escape attached action 的限定范围、PointerDown 与 Click 的去重、教程布局不再于按下期间夺焦、物理诊断关联门槛及独立 DevValidation 安装隔离。保持 state=waiting_for_gpt_review 与 UserVerified=false，等待用户完成上述三项真实物理验收。
