@@ -1,0 +1,20 @@
+{
+  "protocol": "pixel-tart-physical-pointer-evidence/v1",
+  "build_type": "PhysicalPointerDiagnostic_DevValidation",
+  "code_verified": true,
+  "automated_verified": true,
+  "installed_ui_automation_verified": false,
+  "physical_pointer_verified": false,
+  "installed_ui_verified": false,
+  "user_verified": false,
+  "duplicate_close_button_count": 0,
+  "tutorial_visible_x_count": 1,
+  "collage_visible_x_count": 1,
+  "actual_hit_test_element": null,
+  "blocking_ancestor": null,
+  "click_handler_entered": false,
+  "force_exit_tutorial_entered": false,
+  "tutorial_overlay_detached": false,
+  "raw_evidence_uploaded": false,
+  "screenshots_uploaded": false
+}

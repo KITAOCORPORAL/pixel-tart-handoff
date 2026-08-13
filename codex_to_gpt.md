@@ -1,13 +1,13 @@
 # Codex → GPT Handoff
 
 Protocol: pixel-tart-handoff/v1
-ReportId: input-routing-hotfix-devvalidation-20260813
-CreatedAt: 2026-08-13T14:17:52+08:00
+ReportId: physical-pointer-diagnostic-devvalidation-20260813
+CreatedAt: 2026-08-13T16:11:41+08:00
 Project: Pixel Tart
 
 ## Git
 Branch: feature/pixel-tart-product-redesign
-HEAD: c38a8015cabbf67645c6a8bbb0282b4f2f995d11
+HEAD: 16be311573e7b9a91b9cee2ee27484a2196acc81
 WorkingTreeClean: true
 
 ## Version
@@ -16,41 +16,36 @@ FileVersion: 2.3.0.0
 SchemaVersion: 5
 
 ## 本轮完成
-完成 Input Routing / HitTest / Emergency Escape P0 Hotfix。教程 X、教程“退出教程”、Shell 顶层 X、RAW X/Escape、批量压缩 X/Escape 统一由 Shell 逃生路径处理，不依赖模块 Command、CanExecute、IsBusy 或任务状态。教程退出先立即移除界面和恢复工作台，再在 500ms 安全窗口内执行后台清理；旧教程会话不能继续写入正式项目。Acceptance 程序缺少显式隔离根时会拒绝启动，验收安装器不会自动运行、不会关闭正式应用，也不会删除正式 LocalAppData。未进入 RC3，未修改版本或 Schema。
+完成 Physical Pointer Diagnostic DevValidation 与 Single Close Authority 收口。全页模块只显示 Shell X；模态和抽屉只显示本地 Header X；教程只显示一个 X，并保留“退出教程”文字按钮。教程 X、文字按钮和 Esc 共用同一个 ForceExitTutorial 路径，先同步拆除教程界面，再执行受限后台清理。关闭点击区域为 40×40 DIP，图标为 16 DIP。
+
+诊断版同时记录 Win32 鼠标消息、WPF PreviewMouse、HitTest/祖先链和关闭处理器四层结果。只有完整的物理 down/up、WPF down/up 和同一目标链才能标记 PhysicalPointerVerified；UI Automation Invoke 不会被当作物理鼠标。诊断文件只包含脱敏控件标识、类型、坐标和事件状态，不包含路径、文件名、客户资料、照片或 RAW。
 
 ## 测试
-Debug: 2000/2000 (Core 1136 + WPF 763 + DPI 101), 0 failed, 0 skipped, 0 warnings, 0 errors
-Release: 2000/2000 (Core 1136 + WPF 763 + DPI 101), 0 failed, 0 skipped, 0 warnings, 0 errors
+Debug: 2009/2009 (Core 1136 + WPF 772 + DPI 101), 0 failed, 0 skipped, 0 warnings, 0 errors
+Release: 2009/2009 (Core 1136 + WPF 772 + DPI 101), 0 failed, 0 skipped, 0 warnings, 0 errors
 DPI: 101/101
 
 ## Installed UI
 CodeVerified: true
 AutomatedVerified: true
-InstalledUiVerified: true
+InstalledUiAutomationVerified: false
+PhysicalPointerVerified: false
+InstalledUiVerified: false
 UserVerified: false
-ValidationMethod: WindowsUIAutomation
-ComputerUseUsed: false
-TutorialXUiAVerified: true
-TutorialExitUiAVerified: true
-ShellXUiAVerified: true
-RawXUiAVerified: true
-RawEscapeVerified: true
-BatchXUiAVerified: true
-BatchEscapeVerified: true
-WorkbenchRestoredVerified: true
-SidebarRestoredVerified: true
+
+本轮新诊断包尚未执行安装版 UI Automation，也尚未由用户使用真实鼠标点击。上一轮 InputRoutingHotfix 的 UIA Invoke 结果不继承为本轮安装版或物理鼠标结论。
 
 ## 安装包
-Path: artifacts/releases/2.3.0/installer/PixelTart_2.3.0_InputRoutingHotfix_DevValidation_x64.exe
-SHA256: 0B38DD0F65268FD589E5A637E1293EC3BE3E8EDADAA2B33DF5D0C59303AC966C
-BuildType: InputRoutingHotfix_DevValidation
-Size: 50723306 bytes
+Path: artifacts/releases/2.3.0/installer/PixelTart_2.3.0_PhysicalPointerDiagnostic_DevValidation_x64.exe
+SHA256: EDA6A4672ACF300EDF98DE0AF8EC7F7219B7B7B4FD84F612446CF97F5F8FECF1
+BuildType: PhysicalPointerDiagnostic_DevValidation
+Size: 50726626 bytes
 
 ## UI证据
-`ui-review/input-routing/` 包含脱敏 UI Automation 控件矩阵、事件链、发布审计和验证边界。正式定位全部使用稳定 AutomationId。安装版中目标按钮均为可见、启用、未离屏且支持 InvokePattern；关闭后 WorkbenchRoot 与 SidebarRoot 均可见、启用、未离屏。诊断链明确记录 CloseClick/SurfaceCloseRequested/ForceExitTutorialEntered 或 ForceCloseCurrentSurfaceEntered。BlockingElement 为 None；事件已到达按钮。未上传截图、原始日志、绝对路径、数据库、照片或 RAW。
+`ui-review/physical-pointer/` 只记录当前验证边界与待验状态，不包含伪造截图或原始物理诊断文件。自动测试确认当前 Surface 的重复 X 数量为 0；教程可见 X 数量为 1；拼图可见 X 数量为 1。安装版运行时诊断尚待用户真实点击后生成。
 
 ## 未验证项目
-Windows 安全策略阻止了自动化工具取得前台鼠标控制，因此没有把物理鼠标 SendInput 标记为通过；本轮通过的是实际安装版上的 Windows UI Automation InvokePattern 与定向 Escape。UserVerified 必须继续保持 false，直到用户亲自在前台确认。上一轮 GlobalSurfaceClose 的自动结论已被本轮结果取代。
+以下项目必须由用户在前台真实鼠标验证：教程 X、教程“退出教程”、拼图唯一 X、RAW 唯一 X、批量压缩唯一 X。当前 actual_hit_test_element、blocking_ancestor、click_handler_entered、force_exit_tutorial_entered、tutorial_overlay_detached 均无物理点击证据，不能填写为通过。
 
 ## 请求GPT审查
-请审查产品提交、2000/2000 Debug/Release 结果、安装包哈希、Shell 逃生层级、教程立即退出与会话隔离、Acceptance fail-closed 和卸载安全边界。不要把 Windows UI Automation 验证推断为用户验收或物理鼠标验收。
+请审查产品提交、2009/2009 Debug/Release 结果、Single Close Authority、物理鼠标四层诊断、UIA 与物理鼠标严格分离、Acceptance 隔离安装边界及安装包哈希。请保持 state=waiting_for_gpt_review、PhysicalPointerVerified=false、InstalledUiVerified=false、UserVerified=false，直到用户真实前台点击并确认。
