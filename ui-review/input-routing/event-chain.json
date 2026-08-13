@@ -1,0 +1,16 @@
+{
+  "protocol": "pixel-tart-input-routing-diagnostic/v1",
+  "blocking_element": "None",
+  "chains": {
+    "tutorial_x": ["CloseClick", "SurfaceCloseRequested", "ForceExitTutorialEntered", "WorkbenchRootVisible", "SidebarRootVisible"],
+    "tutorial_exit": ["TutorialExitButtonInvoke", "ForceExitTutorialEntered", "WorkbenchRootVisible", "SidebarRootVisible"],
+    "shell_x": ["CloseClick", "SurfaceCloseRequested", "ForceCloseCurrentSurfaceEntered", "WorkbenchRootVisible"],
+    "raw_x": ["CloseClick", "SurfaceCloseRequested", "ForceCloseCurrentSurfaceEntered", "WorkbenchRootVisible"],
+    "raw_escape": ["PreviewKeyDownEscape", "ForceCloseCurrentSurfaceEntered", "WorkbenchRootVisible"],
+    "batch_x": ["CloseClick", "SurfaceCloseRequested", "ForceCloseCurrentSurfaceEntered", "WorkbenchRootVisible"],
+    "batch_escape": ["PreviewKeyDownEscape", "ForceCloseCurrentSurfaceEntered", "WorkbenchRootVisible", "SidebarRootVisible"]
+  },
+  "input_hit_test_result": "Target Button or child visual",
+  "original_source": "Target Button",
+  "handled_before_shell": false
+}

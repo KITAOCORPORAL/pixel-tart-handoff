@@ -1,0 +1,15 @@
+{
+  "protocol": "pixel-tart-release-audit/v1",
+  "product_head": "c38a8015cabbf67645c6a8bbb0282b4f2f995d11",
+  "product_version": "2.3.0",
+  "file_version": "2.3.0.0",
+  "schema_version": 5,
+  "provider": "None",
+  "installer_name": "PixelTart_2.3.0_InputRoutingHotfix_DevValidation_x64.exe",
+  "installer_size": 50723306,
+  "installer_sha256": "0B38DD0F65268FD589E5A637E1293EC3BE3E8EDADAA2B33DF5D0C59303AC966C",
+  "publish_file_count": 280,
+  "forbidden_payload_count": 0,
+  "debug_tests": { "passed": 2000, "failed": 0, "skipped": 0 },
+  "release_tests": { "passed": 2000, "failed": 0, "skipped": 0 }
+}

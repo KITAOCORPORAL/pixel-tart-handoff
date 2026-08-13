@@ -1,0 +1,18 @@
+{
+  "protocol": "pixel-tart-ui-automation-validation/v1",
+  "validation_method": "WindowsUIAutomation",
+  "installed_build": true,
+  "controls": [
+    { "automation_id": "TutorialCalloutCloseButton", "visible": true, "enabled": true, "offscreen": false, "invoke_available": true, "result": "PASS" },
+    { "automation_id": "TutorialExitButton", "visible": true, "enabled": true, "offscreen": false, "invoke_available": true, "result": "PASS" },
+    { "automation_id": "ShellEmergencyCloseButton", "visible": true, "enabled": true, "offscreen": false, "invoke_available": true, "result": "PASS" },
+    { "automation_id": "RawToJpegCloseButton", "visible": true, "enabled": true, "offscreen": false, "invoke_available": true, "result": "PASS" },
+    { "automation_id": "BatchCompressCloseButton", "visible": true, "enabled": true, "offscreen": false, "invoke_available": true, "result": "PASS" },
+    { "automation_id": "WorkbenchRoot", "visible": true, "enabled": true, "offscreen": false, "control_type": "Pane", "result": "PASS" },
+    { "automation_id": "SidebarRoot", "visible": true, "enabled": true, "offscreen": false, "control_type": "Pane", "result": "PASS" }
+  ],
+  "escape": {
+    "raw": "PASS",
+    "batch_compress": "PASS"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "protocol": "pixel-tart-validation-boundary/v1",
+  "computer_use_used": false,
+  "browser_used": false,
+  "windows_uia_used": true,
+  "installed_executable_used": true,
+  "acceptance_root_isolated": true,
+  "physical_mouse_verified": false,
+  "physical_mouse_reason": "Windows foreground security prevented automated SendInput verification.",
+  "user_verified": false,
+  "sensitive_data_uploaded": false,
+  "raw_uploaded": false,
+  "logs_uploaded": false,
+  "database_uploaded": false
+}
