@@ -4,7 +4,7 @@ Branch: `feature/asset-library-v1`
 
 ## Acceptance fields
 
-- `visual_analysis_ui_complete=false` — the real foreground evidence set is not complete yet.
+- `visual_analysis_ui_complete=true` — real foreground captures `07`–`09` show the selected synthetic JPEG in the Preview Inspector with distinct Palette, Histogram, and Tone tabs.
 - `analysis_pipeline_performance_verified=true`
 - `color_management_reference_verified=false` — there is no certified non-sRGB ICC fixture with an independent converted-RGB oracle.
 - `raw_visual_proxy_verified=false` — there is no reliable program-generated RAW/DNG embedded-preview fixture and the Preview decoder still rejects RAW.
@@ -52,11 +52,53 @@ The A → B → C test uses three real generated JPEGs and the production WPF de
 
 The WPF evidence contract passes `13/13`. It maps exact filenames `07` through `14` to stable Preview automation targets, enforces synthetic-only evidence policy, rejects duplicate PNG bytes, rejects textual PNG metadata, and scans for local path/customer/token markers.
 
-This contract does not make screenshots true. `visual_search_ui_review_complete` remains false until each requested scene is visibly reached in the real foreground Preview and its distinct window capture is saved.
+The real foreground captures now present are:
 
-## Final foreground attempt
+- `07_visual_analysis_color.png` — SHA-256 `89E23E6DA07C96C4742605E5F2CC972D0A09723CE62F2B07C287A17AA047FCB9`
+- `08_visual_analysis_histogram.png` — SHA-256 `02A60C9EDE9DDAD65844CA85F41AE7E6D58BDF90B8E4561AB619EFD5BA95E321`
+- `09_visual_analysis_tone.png` — SHA-256 `465D540748BF2B507F27D24EE52F054A26AAFB9FF65DA0D70EFF2F4DF8C5FB6E`
 
-The self-contained Preview was launched with a new temporary acceptance root and a newly generated synthetic fixture directory. The foreground window remained responsive, but the fixture import did not populate the AssetGrid; the visible import dialog exposed no completed asset selection or analysis state. No `07`–`14` capture was written, and no UI completion field was promoted from false.
+They are distinct full-window captures of the real Preview using generated JPEGs only. Captures `10`–`14` were not produced, so `visual_search_ui_review_complete`, visual filter/similarity, Smart Folder, and batch UI completion remain false.
+
+## Foreground import recovery
+
+The first failure was before the repository: `ImportDemoDirectoryAsync` scanned only the selected root with `SearchOption.TopDirectoryOnly`, while the generated JPEGs are stored under nested `phase0` and `performance` directories. It therefore produced an empty file list, never entered the repository transaction, and left the AssetGrid empty.
+
+The Preview-only recovery now recursively scans the selected synthetic root, filters to supported image extensions, imports references transactionally, and actively refreshes the current query. This recovery is committed in asset HEAD `3da45d53e4628a743a2809f908cbdfd60d706c43`. The foreground file picker remains a multi-file picker, not a folder picker. It advertises JPG/JPEG/PNG/TIFF/WEBP plus only the existing RAW extensions; this does not claim RAW visual decoding support.
+
+Latest isolated Dev Preview diagnostics:
+
+| Field | Result |
+| --- | ---: |
+| PickerAccepted | true |
+| SelectedFileCount | 33 |
+| ImportCommandEntered | true |
+| ImportServiceEntered | true |
+| ImportedCount / SkippedCount / FailedCount | 33 / 0 / 0 |
+| RepositoryAssetCountBefore / After | 0 / 33 |
+| CurrentQueryCount | 33 |
+| ViewModelItemCount | 33 |
+| AssetGridItemCount | 33 |
+| ItemsSource | `AssetCards`, same ViewModel collection |
+| CollectionChangedCount | 35 |
+| DataContext | `AssetLibraryPreviewViewModel` |
+| SelectedCollection | `AllAssets` |
+| ThumbnailQueueCount / ThumbnailFailureCount | 20 / 0 |
+
+Diagnostics contain only counts, safe type/collection tokens, extension totals, and state tokens. They contain no absolute path, customer filename, or image contents. Reference mode does not move, rename, delete, or write the source file. Managed-copy records use their managed path for thumbnails when present, with source-path fallback.
+
+The self-contained Preview used for this recovery is:
+
+`artifacts/asset-library-v16/preview/PixelTart_AssetLibrary_V1_6_Preview_ImportRecovery2/PixelTart_AssetLibrary_V1_6_Preview.exe`
+
+SHA-256: `D4ACB1E351397C9194B7D5771D06BA79236B7AFDC29C2938713AC4699C0B4963`
+
+## Current verification
+
+- Preview Debug and Release builds: 0 warnings, 0 errors.
+- Core focused set (`AssetLibraryV16Tests`, `VisualAnalysisTests`, `AssetLibraryV16Phase0AcceptanceTests`): 27 passed, 0 failed, 0 skipped.
+- WPF focused set (`AssetLibraryPreviewWpfTests`, `AssetLibraryV16EvidenceContractTests`): 13 passed, 0 failed, 0 skipped.
+- Current counted total: 40 passed, 0 failed, 0 skipped.
 
 ## Explicitly unverified
 

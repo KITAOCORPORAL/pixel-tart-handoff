@@ -7,7 +7,7 @@ Project: Pixel Tart
 
 ## Git
 Branch: feature/asset-library-v1
-HEAD: asset=d8f0c6b797ea4c47cd8536dd6520750e6ac034f8; online baseline=e30eac4762af7eff837645a8303c47eeb95c5fe2
+HEAD: asset=3da45d53e4628a743a2809f908cbdfd60d706c43 (foreground import recovery committed); online baseline=e30eac4762af7eff837645a8303c47eeb95c5fe2
 WorkingTreeClean: true
 
 P0 baseline: `feature/pixel-tart-product-redesign` at `4dac5f8e4460b7a67309646b6133bd186c121fea`.
@@ -36,14 +36,23 @@ Both branches use the byte-identical `pixel-tart-asset-selection/v1` contract wi
 ## 测试
 Asset V1.6 Core focused: 27/27 passed. Asset WPF/evidence focused: 13/13 passed. Preview Debug and Release builds: 0 warnings, 0 errors. The recorded isolated acceptance run also completed 100/1000 decode→analysis→cache→SQLite→Inspector cohorts and A→B→C cancellation; ICC/RAW remain skipped by design.
 
+## Foreground import recovery
+The first foreground failure was in Preview demo discovery, before SQLite: `ImportDemoDirectoryAsync` used `TopDirectoryOnly`, while the generated JPEGs were nested under `phase0` and `performance`. The Preview now recursively scans supported extensions, performs reference import, commits the feature-private SQLite rows, and refreshes the current query.
+
+Latest isolated diagnostics (synthetic directory source, no customer data): `PickerAccepted=true`, `SelectedFileCount=33`, `ImportCommandEntered=true`, `ImportServiceEntered=true`, `ImportedCount=33`, `SkippedCount=0`, `FailedCount=0`, repository `0→33`, current query `33`, ViewModel `33`, AssetGrid `33`, ItemsSource `AssetCards` (same ViewModel collection), `CollectionChangedCount=35`, `DataContext=AssetLibraryPreviewViewModel`, selected collection `AllAssets`, thumbnail queue `20`, thumbnail failures `0`. The diagnostics file stores counts and safe state/type tokens only.
+
+Preview recovery executable: `artifacts/asset-library-v16/preview/PixelTart_AssetLibrary_V1_6_Preview_ImportRecovery2/PixelTart_AssetLibrary_V1_6_Preview.exe`.
+
+SHA256: `D4ACB1E351397C9194B7D5771D06BA79236B7AFDC29C2938713AC4699C0B4963`.
+
 Release: Asset Preview and Online Server/Preview/formal product builds completed with 0 warnings and 0 errors. Online dependency vulnerability scan found no known vulnerable package.
 
 DPI: Not separately run for these isolated previews; P0 DPI code was not modified.
 
 ## Preview
 
-Asset Preview: `artifacts/asset-library-v16/preview/PixelTart_AssetLibrary_V1_6_Preview_Foreground/PixelTart_AssetLibrary_V1_6_Preview.exe`
-SHA256: `0244F93ED4A4BD93378E38DC85BC53CDB1BBDA637C4171F6BA8EBB2614B1AAD3`
+Asset Preview: `artifacts/asset-library-v16/preview/PixelTart_AssetLibrary_V1_6_Preview_ImportRecovery2/PixelTart_AssetLibrary_V1_6_Preview.exe`
+SHA256: `D4ACB1E351397C9194B7D5771D06BA79236B7AFDC29C2938713AC4699C0B4963`
 
 Online Preview: `tools/PixelTart_OnlineSelection_LocalDev_Preview.ps1`
 
@@ -65,14 +74,14 @@ No installer, RC or formal release package was generated.
 
 ## UI证据
 
-Four unique Asset Preview captures use programmatically generated synthetic JPEGs and contain no customer material. Requested visual-analysis captures `07`–`14` were not produced: the final isolated foreground attempt remained responsive but did not populate the AssetGrid, so no UI completion field was promoted.
+Seven unique Asset Preview captures use programmatically generated synthetic JPEGs and contain no customer material. The newly captured real foreground scenes are `07_visual_analysis_color.png`, `08_visual_analysis_histogram.png`, and `09_visual_analysis_tone.png`; each is a distinct full-window, metadata-free capture from the selected synthetic asset. Scenes `10`–`14` remain deferred, so visual filter, Smart Folder, similarity, and batch UI completion stay false.
 
 Online requested screenshots: deferred; no old screenshot, generated card or code-only mock was substituted.
 
 ## 未验证项目
 
 1. Asset complete Folder drag/drop UI, complete Tag Manager/Smart Builder UI, interruption fault injection, certified ICC/RAW proxy fixtures, 10,000 JPEG UI performance, and 100k visual query/similarity gates.
-2. Asset requested captures 05–09, including the three Visual Analysis screenshots.
+2. Asset requested captures 05–06 and 10–14; the three Visual Analysis captures 07–09 are now real foreground evidence.
 3. Online disk-delete cleanup journal, full remote asset-state hydration, field-level multi-client reconciliation, transactional enforcement of all selection rules, media-session auto-refresh, WeChat DevTools runtime acceptance, seven UI screenshots and physical-phone access.
 4. Production HTTPS/cloud/object storage/WeChat identity and deployment.
 5. Controlled integration with P0 and full merged regression.
