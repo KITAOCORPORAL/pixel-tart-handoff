@@ -6,8 +6,8 @@ CreatedAt: 2026-08-14T12:48:30+08:00
 Project: Pixel Tart
 
 ## Git
-Branch: feature/asset-library-v1
-HEAD: asset=3da45d53e4628a743a2809f908cbdfd60d706c43 (foreground import recovery committed); online baseline=e30eac4762af7eff837645a8303c47eeb95c5fe2
+Branch: feature/modular-harness-v1
+HEAD: harness=44cf978f8fe9a62c1908dc7bd8520ced85ab2cd2; asset source=3da45d53e4628a743a2809f908cbdfd60d706c43; online source=e30eac4762af7eff837645a8303c47eeb95c5fe2
 WorkingTreeClean: true
 
 P0 baseline: `feature/pixel-tart-product-redesign` at `4dac5f8e4460b7a67309646b6133bd186c121fea`.
@@ -15,6 +15,12 @@ P0 baseline: `feature/pixel-tart-product-redesign` at `4dac5f8e4460b7a67309646b6
 P0Merged: false
 
 RCGenerated: false
+
+Asset Library is registered as an embedded WorkspaceModule at `asset-library` and hosted in the existing MainWindow. No second GUI process is started; the standalone Asset Preview remains development-only.
+
+Harness focused tests: 7 passed, 0 failed, 0 skipped. Product Debug and Release builds: 0 warnings, 0 errors.
+
+Harness module status: Module Registry true; Capability Registry true; Provider Registry true; RAW Tool Module true; Online Selection Contract true; Visual Analysis Embedded true; Visual Filter Embedded false; Visual Similarity Embedded false.
 
 No feature branch was merged to P0 or main, and no RC or tag was created.
 
