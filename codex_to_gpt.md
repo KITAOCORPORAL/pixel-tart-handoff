@@ -1,13 +1,13 @@
 # Codex → GPT Handoff
 
 Protocol: pixel-tart-handoff/v1
-ReportId: parallel-feature-v1-5-20260814
+ReportId: asset-library-v1-6-20260814
 CreatedAt: 2026-08-14T12:48:30+08:00
 Project: Pixel Tart
 
 ## Git
-Branch: feature/asset-library-v1 + feature/online-selection-v1
-HEAD: asset=7f18c8f1ca481256b2eef72b90a44d1dc300a370; online=e30eac4762af7eff837645a8303c47eeb95c5fe2
+Branch: feature/asset-library-v1
+HEAD: asset=d8f0c6b797ea4c47cd8536dd6520750e6ac034f8; online baseline=e30eac4762af7eff837645a8303c47eeb95c5fe2
 WorkingTreeClean: true
 
 P0 baseline: `feature/pixel-tart-product-redesign` at `4dac5f8e4460b7a67309646b6133bd186c121fea`.
@@ -27,14 +27,14 @@ Asset Library uses only its feature-private schema. Online LocalDev uses an inde
 
 ## 本轮完成
 
-Asset Library V1.5 now has stable asset identity, safe Reference/Managed Copy boundaries, folder/tag relationships, persistent undo success paths, SQL smart-filter paths, keyset paging, a real multi-column virtualized grid, async bounded thumbnails, and local pixel-based palette/histogram/tone analysis. Cache identity includes decoded-pixel fingerprint, algorithm version, palette size and palette sorting.
+Asset Library V1.6 development preview adds a unified `AssetVisualFeatures` model, feature-private visual persistence, version/fingerprint-aware cache identity, SQL visual filtering and Smart-folder predicates, weighted palette/color similarity, explainable visual similarity scoring, bounded analysis scheduling, and Preview controls for visual filters, chips, inspector actions, context-menu actions, and batch scope selection. The feature remains isolated from the formal product database and P0 shell.
 
 Online Selection V1.5 now has an independent ASP.NET LocalDev server bound to `127.0.0.1`, isolated SQLite/object storage, re-encoded JPEG variants, token hashing, short-lived media sessions, version/revision/idempotency, confirmation snapshots, locking/reopen/history, a dedicated Desktop Preview, a five-page Mini Program LocalDev adapter, and an exact-child one-click launcher.
 
 Both branches use the byte-identical `pixel-tart-asset-selection/v1` contract with SHA-256 `0CFF267202FE8B1715C20729077F7792F4A30CDAB795F81ECF356AD94F90868A`. The branches do not reference each other's implementation and no integration branch was created.
 
 ## 测试
-Debug: Asset Core 36/36; Asset WPF 9/9; Online API 10/10; Online Core 46/46; Online WPF 23/23; Mini contract PASS. Total numeric tests: 124/124, 0 failed, 0 skipped.
+Asset V1.6 Core focused: 27/27 passed. Asset WPF/evidence focused: 13/13 passed. Preview Debug and Release builds: 0 warnings, 0 errors. The recorded isolated acceptance run also completed 100/1000 decode→analysis→cache→SQLite→Inspector cohorts and A→B→C cancellation; ICC/RAW remain skipped by design.
 
 Release: Asset Preview and Online Server/Preview/formal product builds completed with 0 warnings and 0 errors. Online dependency vulnerability scan found no known vulnerable package.
 
@@ -42,7 +42,8 @@ DPI: Not separately run for these isolated previews; P0 DPI code was not modifie
 
 ## Preview
 
-Asset Preview: `artifacts/asset-library-v15/preview/PixelTart_AssetLibrary_V1_5_Preview/PixelTart_AssetLibrary_V1_5_Preview.exe`
+Asset Preview: `artifacts/asset-library-v16/preview/PixelTart_AssetLibrary_V1_6_Preview_Foreground/PixelTart_AssetLibrary_V1_6_Preview.exe`
+SHA256: `0244F93ED4A4BD93378E38DC85BC53CDB1BBDA637C4171F6BA8EBB2614B1AAD3`
 
 Online Preview: `tools/PixelTart_OnlineSelection_LocalDev_Preview.ps1`
 
@@ -64,13 +65,13 @@ No installer, RC or formal release package was generated.
 
 ## UI证据
 
-Four unique Asset Preview captures use programmatically generated synthetic JPEGs and contain no customer material. A duplicate frame incorrectly named as visual-analysis evidence was removed during independent review.
+Four unique Asset Preview captures use programmatically generated synthetic JPEGs and contain no customer material. Requested visual-analysis captures `07`–`14` were not produced: the final isolated foreground attempt remained responsive but did not populate the AssetGrid, so no UI completion field was promoted.
 
 Online requested screenshots: deferred; no old screenshot, generated card or code-only mock was substituted.
 
 ## 未验证项目
 
-1. Asset complete Folder drag/drop UI, complete Tag Manager/Smart Builder UI, interruption fault injection, certified ICC/RAW proxy fixtures, 10,000 JPEG UI performance, and full visual-analysis pipeline performance.
+1. Asset complete Folder drag/drop UI, complete Tag Manager/Smart Builder UI, interruption fault injection, certified ICC/RAW proxy fixtures, 10,000 JPEG UI performance, and 100k visual query/similarity gates.
 2. Asset requested captures 05–09, including the three Visual Analysis screenshots.
 3. Online disk-delete cleanup journal, full remote asset-state hydration, field-level multi-client reconciliation, transactional enforcement of all selection rules, media-session auto-refresh, WeChat DevTools runtime acceptance, seven UI screenshots and physical-phone access.
 4. Production HTTPS/cloud/object storage/WeChat identity and deployment.
