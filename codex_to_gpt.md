@@ -1,97 +1,126 @@
-# Codex → GPT Handoff
+# Codex → GPT Handoff — Modular Harness v1
 
-Protocol: pixel-tart-handoff/v1
-ReportId: asset-library-v1-6-20260814
-CreatedAt: 2026-08-14T12:48:30+08:00
+Protocol: `pixel-tart-handoff/v1`
+ReportId: `modular-harness-v1-acceptance-closure-20260817`
 Project: Pixel Tart
+State: `waiting_for_gpt_review`
 
-## Git
-Branch: feature/modular-harness-v1
-HEAD: harness=44cf978f8fe9a62c1908dc7bd8520ced85ab2cd2; asset source=3da45d53e4628a743a2809f908cbdfd60d706c43; online source=e30eac4762af7eff837645a8303c47eeb95c5fe2
-WorkingTreeClean: true
+Formal Harness acceptance is complete at `78/78` with `0` failed and `0` skipped. This handoff records the completed DevPreview integration and remains explicit that it is not a P0 merge, RC, installer, or user acceptance.
 
-P0 baseline: `feature/pixel-tart-product-redesign` at `4dac5f8e4460b7a67309646b6133bd186c121fea`.
+## Git and delivery boundary
 
-P0Merged: false
+- Harness branch: `feature/modular-harness-v1`
+- Harness HEAD: `5be53f6393bba1069e921476bff976257d4f8505`
+- Harness working tree: clean at the recorded commit
+- Handoff SHA: **pending delivery commit** (not self-referenced)
+- Handoff working tree: clean at the delivery commit
+- Asset source: `3da45d53e4628a743a2809f908cbdfd60d706c43`
+- Online source: `e30eac4762af7eff837645a8303c47eeb95c5fe2`
+- P0 baseline: `feature/pixel-tart-product-redesign` at `4dac5f8e4460b7a67309646b6133bd186c121fea`
 
-RCGenerated: false
+Asset Library is embedded in the Modular Harness Pixel Tart Shell, but the Harness branch has not been merged into the P0 branch.
 
-Asset Library is registered as an embedded WorkspaceModule at `asset-library` and hosted in the existing MainWindow. No second GUI process is started; the standalone Asset Preview remains development-only.
+`P0Merged=false`, `RCGenerated=false`, and `UserVerified=false`. `ExternalPluginRuntime=false`. No main merge, P0 merge, RC, installer, tag, or formal release package was generated.
 
-Harness focused tests: 7 passed, 0 failed, 0 skipped. Product Debug and Release builds: 0 warnings, 0 errors.
+## Harness kernel and registries
 
-Harness module status: Module Registry true; Capability Registry true; Provider Registry true; RAW Tool Module true; Online Selection Contract true; Visual Analysis Embedded true; Visual Filter Embedded false; Visual Similarity Embedded false.
+The existing Harness v1 kernel provides transactional module registration, capability and provider contracts, route and navigation registration, shared tasks/settings, lifecycle isolation, dependency ordering/cycle protection, failure isolation, and development diagnostics.
 
-No feature branch was merged to P0 or main, and no RC or tag was created.
+| Registry | Count | Result |
+| --- | ---: | --- |
+| Modules | 3 | Asset Library, RAW Tool, Online Selection |
+| Capabilities | 14 | Core 4 + Asset 8 + RAW 1 + Online 1 |
+| Providers | 1 | `visual-analysis.local-pixel` |
+| Routes | 2 | Asset Library and Online Selection descriptor route |
+| Navigation | 1 | User-facing Asset Library toolbox entry |
+| Tasks | 5 | Shared task registry |
+| Settings | 4 | Shared settings registry |
 
-## Version
-ProductVersion: 2.3.0
-FileVersion: 2.3.0.0
-SchemaVersion: 5
+`ModuleRegistry`, `CapabilityRegistry`, `ProviderRegistry`, module manifest, route registration, navigation registration, failure isolation, and dependency-cycle protection are complete.
 
-Asset Library uses only its feature-private schema. Online LocalDev uses an independent server database. The formal product database and SchemaVersion remain unchanged.
+## Embedded Asset Library
 
-## 本轮完成
+`pixel-tart.asset-library` is a `WorkspaceModule` at route `asset-library` with eight public capabilities: `asset.query`, `asset.pick`, `asset.import`, `asset.folder`, `asset.tag`, `asset.smart-folder`, `asset.visual-analysis`, and `asset.visual-search`.
 
-Asset Library V1.6 development preview adds a unified `AssetVisualFeatures` model, feature-private visual persistence, version/fingerprint-aware cache identity, SQL visual filtering and Smart-folder predicates, weighted palette/color similarity, explainable visual similarity scoring, bounded analysis scheduling, and Preview controls for visual filters, chips, inspector actions, context-menu actions, and batch scope selection. The feature remains isolated from the formal product database and P0 shell.
+`MainWindow` owns one `ModuleWorkspaceHost`; its route factory creates the real `AssetLibraryPage` in that same WPF window. The shell keeps global navigation and the global Task Center visible, and the DevPreview exposes one user-facing Asset Library toolbox entry. The embedded route does not launch the standalone preview.
 
-Online Selection V1.5 now has an independent ASP.NET LocalDev server bound to `127.0.0.1`, isolated SQLite/object storage, re-encoded JPEG variants, token hashing, short-lived media sessions, version/revision/idempotency, confirmation snapshots, locking/reopen/history, a dedicated Desktop Preview, a five-page Mini Program LocalDev adapter, and an exact-child one-click launcher.
+Verified embedded state:
 
-Both branches use the byte-identical `pixel-tart-asset-selection/v1` contract with SHA-256 `0CFF267202FE8B1715C20729077F7792F4A30CDAB795F81ECF356AD94F90868A`. The branches do not reference each other's implementation and no integration branch was created.
+- Asset Library module complete: `true`
+- Asset Library embedded: `true`
+- Same MainWindow: `true`
+- Second GUI process: `false`
+- Visual Analysis embedded: `true`
+- Visual Filter embedded: `true`
+- Visual Smart Folder embedded: `true`
+- Color Similarity embedded: `true`
+- Palette Similarity embedded: `true`
+- Visual Similarity embedded: `true`
+- Global Task Center integration: `true`
+- Standalone preview user-facing: `false`
+- Standalone preview development-only: `true`
 
-## 测试
-Asset V1.6 Core focused: 27/27 passed. Asset WPF/evidence focused: 13/13 passed. Preview Debug and Release builds: 0 warnings, 0 errors. The recorded isolated acceptance run also completed 100/1000 decode→analysis→cache→SQLite→Inspector cohorts and A→B→C cancellation; ICC/RAW remain skipped by design.
+The standalone Asset Library Preview is not used as evidence for this embedded integration.
 
-## Foreground import recovery
-The first foreground failure was in Preview demo discovery, before SQLite: `ImportDemoDirectoryAsync` used `TopDirectoryOnly`, while the generated JPEGs were nested under `phase0` and `performance`. The Preview now recursively scans supported extensions, performs reference import, commits the feature-private SQLite rows, and refreshes the current query.
+## Foreground chain and process truth
 
-Latest isolated diagnostics (synthetic directory source, no customer data): `PickerAccepted=true`, `SelectedFileCount=33`, `ImportCommandEntered=true`, `ImportServiceEntered=true`, `ImportedCount=33`, `SkippedCount=0`, `FailedCount=0`, repository `0→33`, current query `33`, ViewModel `33`, AssetGrid `33`, ItemsSource `AssetCards` (same ViewModel collection), `CollectionChangedCount=35`, `DataContext=AssetLibraryPreviewViewModel`, selected collection `AllAssets`, thumbnail queue `20`, thumbnail failures `0`. The diagnostics file stores counts and safe state/type tokens only.
+The retained foreground result is synthetic-only and verified through one root `MainWindow`: Workbench → Toolbox → Asset Library → reference import → 12-item AssetGrid → Inspector palette/histogram/tone → visual filter → Smart Folder → color/palette/visual similarity → module diagnostics → return to Workbench.
 
-Preview recovery executable: `artifacts/asset-library-v16/preview/PixelTart_AssetLibrary_V1_6_Preview_ImportRecovery2/PixelTart_AssetLibrary_V1_6_Preview.exe`.
+Process snapshots record one GUI process at all three stages:
 
-SHA256: `D4ACB1E351397C9194B7D5771D06BA79236B7AFDC29C2938713AC4699C0B4963`.
+- Before Asset Library: `1`
+- After Asset Library: `1`
+- After returning to Workbench: `1`
 
-Release: Asset Preview and Online Server/Preview/formal product builds completed with 0 warnings and 0 errors. Online dependency vulnerability scan found no known vulnerable package.
+The same root process is retained, no child GUI process is enumerated, and no standalone Asset Preview is started.
 
-DPI: Not separately run for these isolated previews; P0 DPI code was not modified.
+Batch visual analysis was triggered from the embedded page through the shell Task Center. The same task has persisted `Queued`, `Running`, and `Completed` transitions in the isolated task/audit store; `Completed` was visually observed at 100% with 12 succeeded and 0 failed. `Queued` and `Running` are persistence-verified, not claimed as visible screenshot states.
 
-## Preview
+## Formal test and build results
 
-Asset Preview: `artifacts/asset-library-v16/preview/PixelTart_AssetLibrary_V1_6_Preview_ImportRecovery2/PixelTart_AssetLibrary_V1_6_Preview.exe`
-SHA256: `D4ACB1E351397C9194B7D5771D06BA79236B7AFDC29C2938713AC4699C0B4963`
+| Suite | Passed | Failed | Skipped |
+| --- | ---: | ---: | ---: |
+| Harness focused | 14 | 0 | 0 |
+| Asset focused | 24 | 0 | 0 |
+| Visual focused | 26 | 0 | 0 |
+| Embedded WPF/evidence | 12 | 0 | 0 |
+| 100K production scale | 2 | 0 | 0 |
+| **Current unique total** | **78** | **0** | **0** |
 
-Online Preview: `tools/PixelTart_OnlineSelection_LocalDev_Preview.ps1`
+Product Debug and Release builds both completed with exit code `0`, warnings disallowed, and `verified=true`. The exact self-contained DevPreview publish is verified under a redacted `%TEMP%` path:
 
-Online launcher final smoke reached `127.0.0.1:5159`, opened `Pixel Tart Online Selection LocalDev`, and stopped only its recorded Server and Preview PIDs.
+`%TEMP%\PixelTart_ModularHarness_V1_Acceptance\Final-20260817-173437-94ea7749a9ce4eb4b3232396da4b4a6a\formal-acceptance-complete-20260817-192824\publish\PixelTart_ModularHarness_V1_DevPreview.exe`
 
-## Installed UI
-CodeVerified: true
-AutomatedVerified: true
-InstalledUiVerified: false
-UserVerified: false
+- Application SHA-256: `827767075FD022DD5D89990F3C5A595A2E91173BC93B0FD4D7C922F0B4BA0FB9`
+- Asset module SHA-256: `892C658628215AC78FEB07801EE08FF5A39064B7C05D97C4B8252BF090BA82D9`
+- Application executables: `1`
+- Published executables: `2`
+- Unexpected executables: `0`
+- `createdump.exe`: verified runtime helper from `runtimepack.Microsoft.NETCore.App.Runtime.win-x64/10.0.10`; not an application entry point
 
-These are development previews, not installed RC builds. Automated tests, generated screenshots and Codex foreground smoke do not set UserVerified=true.
+## Exact foreground evidence
 
-## 安装包
-Path:
-SHA256:
+The handoff contains exactly these ten synthetic-only, metadata-free PNGs under `ui-review/modular-harness/`:
 
-No installer, RC or formal release package was generated.
+`01_workbench.png`, `02_toolbox_asset_library.png`, `03_embedded_asset_library.png`, `04_visual_analysis_palette.png`, `05_visual_analysis_histogram.png`, `06_visual_analysis_tone.png`, `07_visual_filter.png`, `08_visual_similarity.png`, `09_return_workbench.png`, `10_module_diagnostics.png`.
 
-## UI证据
+The formal evidence contract reports 10 present, 10 unique, no missing or invalid files, no sensitive markers, and `capture_status=captured`.
 
-Seven unique Asset Preview captures use programmatically generated synthetic JPEGs and contain no customer material. The newly captured real foreground scenes are `07_visual_analysis_color.png`, `08_visual_analysis_histogram.png`, and `09_visual_analysis_tone.png`; each is a distinct full-window, metadata-free capture from the selected synthetic asset. Scenes `10`–`14` remain deferred, so visual filter, Smart Folder, similarity, and batch UI completion stay false.
+## 100K production evidence
 
-Online requested screenshots: deferred; no old screenshot, generated card or code-only mock was substituted.
+The production-backed scale run used 100,000 synthetic visual-feature rows and 10,000 tag memberships. It verified tone, hue, saturation, contrast, tag + visual, a five-rule Smart Folder, and cold/warm similarity. Similarity returned 100 rows with 4,786 candidates, a 5,000 candidate cap, Top K 100, two feature-store calls, and zero pairwise-cache tables. `visual_query_100k_test=true` and `similarity_100k_candidate_test=true`.
 
-## 未验证项目
+## Intentionally false or deferred
 
-1. Asset complete Folder drag/drop UI, complete Tag Manager/Smart Builder UI, interruption fault injection, certified ICC/RAW proxy fixtures, 10,000 JPEG UI performance, and 100k visual query/similarity gates.
-2. Asset requested captures 05–06 and 10–14; the three Visual Analysis captures 07–09 are now real foreground evidence.
-3. Online disk-delete cleanup journal, full remote asset-state hydration, field-level multi-client reconciliation, transactional enforcement of all selection rules, media-session auto-refresh, WeChat DevTools runtime acceptance, seven UI screenshots and physical-phone access.
-4. Production HTTPS/cloud/object storage/WeChat identity and deployment.
-5. Controlled integration with P0 and full merged regression.
+- `color_management_reference_verified=false` — no independent trusted ICC numerical fixture.
+- `raw_visual_proxy_verified=false` — no independent trusted embedded RAW fixture.
+- `asset_library_standalone_user_facing=false` and `asset_library_standalone_development_only=true`.
+- `external_plugin_runtime_implemented=false`.
+- `P0Merged=false`, `RCGenerated=false`, and `UserVerified=false`.
+- Handoff SHA remains pending until this repository is delivered; no self-referential SHA is invented.
 
-## 请求GPT审查
+No temporary absolute paths, runtime JSON, databases, logs, fixture media, published binaries, or secrets were copied into the handoff. The only binary evidence added is the ten requested PNG screenshots.
 
-Please review the feature-private schema boundaries, exact undo semantics, visual-analysis cache identity, shared asset-selection contract, proxy privacy, LocalDev authentication/versioning, deferred conflict/rule/storage items, and the explicit P0 isolation. Keep `state=waiting_for_gpt_review`, `P0Merged=false`, `RCGenerated=false`, and `UserVerified=false`.
+## GPT review request
+
+Please review the embedded route boundary, registry counts, same-window/process evidence, Task Center persistence wording, publish classification, feature-private data boundary, and the explicit P0/RC/user-verification state. Keep `state=waiting_for_gpt_review` until the handoff is reviewed.
